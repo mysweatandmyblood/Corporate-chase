@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><head>
+    <style>
+        body {
+            opacity: 0;
+            transform: translateY(50px);
+            animation: swipeUpFade 1s ease-out forwards;
+        }
+
+        @keyframes swipeUpFade {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Chase Bank Corporate| Secure Digital Banking</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --success: #10b981;
+            --error: #ef4444;
+            --background: #020617;
+            --card-bg: #0f172a;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --border: #1e293b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        @font-face {
+            font-family: 'Inter';
+            font-style: normal;
+            font-weight: 400;
+            src: url(https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2) format('woff2');
+        }
+
+        @font-face {
+            font-family: 'Inter';
+            font-style: normal;
+            font-weight: 500;
+            src: url(https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuI6fAZ9hiA.woff2) format('woff2');
+        }
+
+        @font-face {
+            font-family: 'Inter';
+            font-style: normal;
+            font-weight: 600;
+            src: url(https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuGKYAZ9hiA.woff2) format('woff2');
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        body {
+            background: var(--background);
+            color: var(--text-primary);
+        }
+
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--background);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            display: none;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255,255,255,0.1);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            animation: spin 1s ease-in-out infinite;
+            margin-bottom: 20px;
+        }
+
+        .loading-text {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* App Header */
+        .app-header {
+            padding: 16px;
+            background: var(--card-bg);
+            color: var(--text-primary);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .bank-logo {
+    height: 100px;
+    width: 150px; /* Optimal width for Chase logo aspect ratio */
+    background: url('https://seekvectors.com/storage/images/chase-bank-logo%20-03.svg') no-repeat left center;
+    background-size: contain;
+    margin-right: auto; /* Ensures proper spacing with QR icon */
+}
+
+        /* Hero Section */
+        .hero-section {
+            padding: 40px 20px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            text-align: center;
+        }
+
+        .hero-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .hero-subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .login-btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: white;
+            color: var(--primary);
+            border-radius: 8px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .login-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Services Section */
+        .services-section {
+            padding: 30px 20px;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .service-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid var(--border);
+            transition: transform 0.3s ease;
+        }
+
+        .service-card:active {
+            transform: scale(0.98);
+        }
+
+        .service-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .service-title {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .service-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* Content Sections */
+        .content-section {
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .content-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .content-text {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            color: var(--text-secondary);
+        }
+
+        /* Quick Access */
+        .quick-access {
+            padding: 20px;
+            background: var(--card-bg);
+            margin: 20px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+        }
+
+        .quick-access-title {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .quick-access-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .quick-access-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .quick-access-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+        }
+
+        .quick-access-label {
+            font-size: 0.75rem;
+            text-align: center;
+        }
+
+        /* Login Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+            backdrop-filter: blur(8px);
+        }
+
+        .login-modal {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 24px;
+            width: 100%;
+            max-width: 400px;
+            border: 1px solid var(--border);
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 15px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+        }
+
+        .error-message {
+            color: var(--error);
+            font-size: 0.85rem;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .modal-btn {
+            width: 100%;
+            padding: 16px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 500;
+            margin-top: 10px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .modal-btn:active {
+            background: var(--primary-dark);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--card-bg);
+            padding: 30px 20px;
+            border-top: 1px solid var(--border);
+            margin-top: 40px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .footer-column-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+
+        .footer-link {
+            display: block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+            transition: color 0.2s ease;
+        }
+
+        .footer-link:active {
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* Responsive Adjustments */
+        @media (min-width: 768px) {
+            body {
+                max-width: 450px;
+                margin: 0 auto;
+                position: relative;
+                box-shadow: 0 0 20px rgba(0,0,0,0.3);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Securely accessing your accounts...</div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="login-modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Secure Authentication</h3>
+                <button class="close-modal" id="closeModal">&times;</button>
+            </div>
+            <form id="loginForm">
+                <div class="input-group">
+                    <label class="input-label">User ID</label>
+                    <input type="text" class="input-field" id="userId" placeholder="Enter your User ID" required>
+                </div>
+                <div class="input-group">
+                    <label class="input-label">Passcode</label>
+                    <input type="password" class="input-field" id="passcode" placeholder="Enter your passcode" required>
+                    <div class="error-message" id="loginError"></div>
+                </div>
+                <button type="submit" class="modal-btn">Continue</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- App Header -->
+    <header class="app-header">
+    <div class="bank-logo"></div>
+    <i class="fas fa-qrcode"></i>
+</header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <h1 class="hero-title">Chase Bank Corporate Banking</h1>
+        <p class="hero-subtitle">Your finances, anytime, anywhere</p>
+        <a href="#" class="login-btn" id="mainLoginBtn">Sign In</a>
+    </section>
+
+    <!-- Quick Access -->
+    <section class="quick-access">
+        <h3 class="quick-access-title"><i class="fas fa-bolt"></i> Quick Access</h3>
+        <div class="quick-access-grid">
+            <div class="quick-access-item" id="quickTransfer">
+                <div class="quick-access-icon">
+                    <i class="fas fa-money-bill-transfer"></i>
+                </div>
+                <span class="quick-access-label">Transfer</span>
+            </div>
+            <div class="quick-access-item" id="quickPay">
+                <div class="quick-access-icon">
+                    <i class="fas fa-money-check"></i>
+                </div>
+                <span class="quick-access-label">Pay Bills</span>
+            </div>
+            <div class="quick-access-item" id="quickATM">
+                <div class="quick-access-icon">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <span class="quick-access-label">ATM Locator</span>
+            </div>
+            <div class="quick-access-item" id="quickSupport">
+                <div class="quick-access-icon">
+                    <i class="fas fa-headset"></i>
+                </div>
+                <span class="quick-access-label">Support</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services-section">
+        <h2 class="section-title"><i class="fas fa-wallet"></i> Our Services</h2>
+        <div class="services-grid">
+            <div class="service-card" id="personalBanking">
+                <div class="service-icon">
+                    <i class="fas fa-piggy-bank"></i>
+                </div>
+                <h3 class="service-title">Corporate Banking</h3>
+                <p class="service-desc">Checking, savings, and loan accounts tailored for you</p>
+            </div>
+            <div class="service-card" id="investment">
+                <div class="service-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3 class="service-title">Investment</h3>
+                <p class="service-desc">Grow your wealth with our expert portfolio management</p>
+            </div>
+            <div class="service-card" id="creditCards">
+                <div class="service-icon">
+                    <i class="fas fa-credit-card"></i>
+                </div>
+                <h3 class="service-title">Credit Cards</h3>
+                <p class="service-desc">Premium cards with exclusive benefits and rewards</p>
+            </div>
+            <div class="service-card" id="loans">
+                <div class="service-icon">
+                    <i class="fas fa-home"></i>
+                </div>
+                <h3 class="service-title">Loans</h3>
+                <p class="service-desc">Competitive rates for home, auto, and personal loans</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Banking Solutions Section -->
+    <section class="content-section">
+        <h2 class="content-title">Comprehensive Banking Solutions</h2>
+        <p class="content-text">
+            At Chase Corporate Bank, we offer a full range of financial services designed to meet all your banking needs. 
+            Whether you're looking for everyday banking solutions or long-term investment strategies, our expert team 
+            is here to guide you every step of the way.
+        </p>
+        <p class="content-text">
+            Our digital banking platform provides secure, 24/7 access to your accounts, allowing you to manage your 
+            finances whenever and wherever you choose. With state-of-the-art security measures, you can bank with 
+            complete confidence.
+        </p>
+    </section>
+
+    <!-- Digital Features Section -->
+    <section class="content-section">
+        <h2 class="content-title">Digital Banking Features</h2>
+        <p class="content-text">
+            Experience the convenience of modern banking with our feature-rich digital platform:
+        </p>
+        <ul style="color: var(--text-secondary); margin-left: 20px; margin-bottom: 15px;">
+            <li style="margin-bottom: 8px;">Real-time account monitoring</li>
+            <li style="margin-bottom: 8px;">Instant transfers between accounts</li>
+            <li style="margin-bottom: 8px;">Mobile check deposit</li>
+            <li style="margin-bottom: 8px;">Customizable alerts and notifications</li>
+            <li style="margin-bottom: 8px;">Personal financial management tools</li>
+        </ul>
+    </section>
+
+    <!-- Security Section -->
+    <section class="content-section">
+        <h2 class="content-title">Your Security Is Our Priority</h2>
+        <p class="content-text">
+            We employ industry-leading security measures to protect your accounts and personal information. 
+            Our multi-layered approach includes end-to-end encryption, biometric authentication, and real-time 
+            fraud monitoring to ensure your peace of mind.
+        </p>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div>
+                <h4 class="footer-column-title">Banking</h4>
+                <a href="#" class="footer-link">Personal Accounts</a>
+                <a href="#" class="footer-link">Business Accounts</a>
+                <a href="#" class="footer-link">Loans</a>
+                <a href="#" class="footer-link">Credit Cards</a>
+            </div>
+            <div>
+                <h4 class="footer-column-title">Services</h4>
+                <a href="#" class="footer-link">Investment</a>
+                <a href="#" class="footer-link">Wealth Management</a>
+                <a href="#" class="footer-link">Insurance</a>
+                <a href="#" class="footer-link">Retirement Planning</a>
+            </div>
+            <div>
+                <h4 class="footer-column-title">Support</h4>
+                <a href="#" class="footer-link">Contact Us</a>
+                <a href="#" class="footer-link">FAQ</a>
+                <a href="#" class="footer-link">Security Center</a>
+                <a href="#" class="footer-link">Branch Locator</a>
+            </div>
+            <div>
+                <h4 class="footer-column-title">Company</h4>
+                <a href="#" class="footer-link">About Us</a>
+                <a href="#" class="footer-link">Careers</a>
+                <a href="#" class="footer-link">Newsroom</a>
+                <a href="#" class="footer-link">Diversity & Inclusion</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2023 Chase Bank. All rights reserved.</p>
+            <p style="margin-top: 8px;">Member FDIC. Corporate Banking.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Valid credentials (for demo purposes)
+        const VALID_USER_ID = "RemmiQue";
+        const VALID_PASSCODE = "RemmiQue";
+
+        // DOM elements
+        const loadingScreen = document.getElementById('loadingScreen');
+        const loginModal = document.getElementById('loginModal');
+        const closeModal = document.getElementById('closeModal');
+        const loginForm = document.getElementById('loginForm');
+        const userIdInput = document.getElementById('userId');
+        const passcodeInput = document.getElementById('passcode');
+        const loginError = document.getElementById('loginError');
+        const mainLoginBtn = document.getElementById('mainLoginBtn');
+        const interactiveElements = [
+            ...document.querySelectorAll('.service-card'),
+            ...document.querySelectorAll('.quick-access-item')
+        ];
+
+        // Show loading screen and redirect to dashboard
+        function redirectToDashboard() {
+            loadingScreen.style.display = 'flex';
+            
+            setTimeout(function() {
+                window.location.href = 'dashboard.html';
+            }, 2500);
+        }
+
+        // Show login modal
+        function showLoginModal() {
+            loginModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            userIdInput.focus();
+        }
+
+        // Hide login modal
+        function hideLoginModal() {
+            loginModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            loginForm.reset();
+            loginError.style.display = 'none';
+        }
+
+        // Validate login credentials
+        function validateLogin(userId, passcode) {
+            return userId === VALID_USER_ID && passcode === VALID_PASSCODE;
+        }
+
+        // Event listeners
+        mainLoginBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            showLoginModal();
+        });
+
+        closeModal.addEventListener('click', hideLoginModal);
+
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const userId = userIdInput.value.trim();
+            const passcode = passcodeInput.value.trim();
+            
+            if (!userId || !passcode) {
+                loginError.textContent = 'Please enter both User ID and Passcode';
+                loginError.style.display = 'block';
+                return;
+            }
+            
+            if (validateLogin(userId, passcode)) {
+                hideLoginModal();
+                redirectToDashboard();
+            } else {
+                loginError.textContent = 'Invalid User ID or Passcode';
+                loginError.style.display = 'block';
+                passcodeInput.value = '';
+                passcodeInput.focus();
+            }
+        });
+
+        // Make all interactive elements require login
+        interactiveElements.forEach(element => {
+            element.addEventListener('click', function(e) {
+                e.preventDefault();
+                showLoginModal();
+            });
+        });
+
+        // Close modal when clicking outside
+        loginModal.addEventListener('click', function(e) {
+            if (e.target === loginModal) {
+                hideLoginModal();
+            }
+        });
+
+        // Prevent zooming
+        document.addEventListener('gesturestart', function(e) {
+            e.preventDefault();
+        });
+
+        // Simulate mobile app behavior on desktop
+        if (window.matchMedia('(min-width: 768px)').matches) {
+            document.body.style.backgroundColor = '#000';
+        }
+    </script>
+</body>
+</html>
